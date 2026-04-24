@@ -1,0 +1,361 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--color-background-tertiary);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:0}
+h2.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.dash{background:var(--color-background-primary)}
+.topbar{background:#1B3A6B;padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.topbar-title{color:#fff;font-size:14px;font-weight:500}
+.topbar-sub{color:rgba(255,255,255,.6);font-size:11px;margin-top:1px}
+.page-tabs{background:#152D56;display:flex;gap:0;padding:0 12px;border-bottom:0.5px solid rgba(255,255,255,.15)}
+.ptab{padding:9px 14px;color:rgba(255,255,255,.6);font-size:12px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.ptab.on{color:#fff;border-bottom-color:#60A5FA}
+.content{padding:14px 16px;background:var(--color-background-tertiary)}
+.pg{display:none}.pg.on{display:block}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.kpi{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:12px 14px}
+.kpi-val{font-size:26px;font-weight:500}
+.kpi-lbl{font-size:11px;color:var(--color-text-secondary);margin-top:3px;line-height:1.4}
+.kpi-sub{font-size:10px;margin-top:4px;font-weight:500}
+.chart-grid{display:grid;gap:12px;margin-bottom:12px}
+.chart-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:14px}
+.chart-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.chart-sub{font-size:11px;color:var(--color-text-secondary);margin-bottom:12px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;font-size:11px;color:var(--color-text-secondary)}
+.leg-item{display:flex;align-items:center;gap:4px}
+.leg-sq{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.insight-strip{border-left:3px solid #A32D2D;border-radius:0 7px 7px 0;background:#FCEBEB;padding:8px 12px;font-size:12px;color:#791F1F;line-height:1.5;margin-top:10px}
+.insight-green{border-left:3px solid #3B6D11;border-radius:0 7px 7px 0;background:#EAF3DE;padding:8px 12px;font-size:12px;color:#27500A;line-height:1.5;margin-top:10px}
+.insight-amber{border-left:3px solid #BA7517;border-radius:0 7px 7px 0;background:#FAEEDA;padding:8px 12px;font-size:12px;color:#633806;line-height:1.5;margin-top:10px}
+.insight-purple{border-left:3px solid #534AB7;border-radius:0 7px 7px 0;background:#EEEDFE;padding:8px 12px;font-size:12px;color:#3C3489;line-height:1.5;margin-top:10px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+</style>
+
+<h2 class="sr-only">AI Trust Paradox dashboard — 4-page interactive dashboard using real data from Stack Overflow Developer Survey 2025</h2>
+
+<div class="dash">
+<div class="topbar">
+  <div>
+    <div class="topbar-title">The Willing but Wary Developer — AI Trust Paradox Dashboard</div>
+    <div class="topbar-sub">Stack Overflow Developer Survey 2025 · n = 48,195 developers · 177 countries · AICW Fellowship 2026</div>
+  </div>
+  <div style="color:rgba(255,255,255,.5);font-size:11px;text-align:right">Galgotias University<br>Dr. Chandni Rani</div>
+</div>
+
+<div class="page-tabs">
+  <div class="ptab on" onclick="sw('pg0',this)">Overview</div>
+  <div class="ptab" onclick="sw('pg1',this)">P1 — Use-Despite-Distrust</div>
+  <div class="ptab" onclick="sw('pg2',this)">P2 — Ethics Gap</div>
+  <div class="ptab" onclick="sw('pg3',this)">P3 — Job Threat</div>
+</div>
+
+<div class="content">
+
+<!-- ══════ PAGE 0: OVERVIEW ══════ -->
+<div class="pg on" id="pg0">
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-val" style="color:#3B6D11">78.5%</div>
+      <div class="kpi-lbl">AI tool adoption rate</div>
+      <div class="kpi-sub" style="color:#3B6D11">26,013 active users</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val" style="color:#A32D2D">3.1%</div>
+      <div class="kpi-lbl">Highly trust AI output</div>
+      <div class="kpi-sub" style="color:#A32D2D">only 1,000 of 32,717</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val" style="color:#A32D2D">45.9%</div>
+      <div class="kpi-lbl">Any distrust rate</div>
+      <div class="kpi-sub" style="color:#A32D2D">nearly 1 in 2 developers</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val" style="color:#854F0B">63.8%</div>
+      <div class="kpi-lbl">Not threatened by AI</div>
+      <div class="kpi-sub" style="color:#854F0B">down from 70% in 2023</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="chart-card">
+      <div class="chart-title">Trust level distribution</div>
+      <div class="chart-sub">Among 32,717 who answered (15,478 No Response retained)</div>
+      <div class="legend">
+        <span class="leg-item"><span class="leg-sq" style="background:#3B6D11"></span>Highly trust 3.1%</span>
+        <span class="leg-item"><span class="leg-sq" style="background:#97C459"></span>Somewhat trust 29.6%</span>
+        <span class="leg-item"><span class="leg-sq" style="background:#888780"></span>Neutral 21.5%</span>
+        <span class="leg-item"><span class="leg-sq" style="background:#F09595"></span>Somewhat distrust 26.1%</span>
+        <span class="leg-item"><span class="leg-sq" style="background:#A32D2D"></span>Highly distrust 19.7%</span>
+      </div>
+      <div style="position:relative;width:100%;height:220px">
+        <canvas id="c_donut" role="img" aria-label="Donut chart showing trust distribution: 3.1% highly trust, 29.6% somewhat trust, 21.5% neutral, 26.1% somewhat distrust, 19.7% highly distrust">Trust: 3.1% highly trust, 29.6% somewhat trust, 21.5% neutral, 26.1% somewhat distrust, 19.7% highly distrust.</canvas>
+      </div>
+      <div class="insight-strip">Paradox severity = 75.5 pts (adoption 78.5% − high trust 3.1%). Avg trust score = 2.700 / 5.0 — below the neutral midpoint of 3.0.</div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Key metrics overview</div>
+      <div class="chart-sub">Adoption vs trust vs threat — the three paradox dimensions</div>
+      <div style="position:relative;width:100%;height:220px">
+        <canvas id="c_overview_bar" role="img" aria-label="Horizontal bar chart showing adoption 78.5%, any distrust 45.9%, not threatened 63.8%, high trust 3.1%">Adoption 78.5%, any distrust 45.9%, not threatened 63.8%, high trust 3.1%.</canvas>
+      </div>
+      <div class="insight-amber">Avg sentiment score 3.54 vs avg trust score 2.70 — a 0.84-point gap on the 1-5 scale confirms the ethics gap at the score level.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ PAGE 1: PARADOX 1 ══════ -->
+<div class="pg" id="pg1">
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-val" style="color:#3B6D11">78.5%</div><div class="kpi-lbl">Adoption rate</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:#A32D2D">3.1%</div><div class="kpi-lbl">High trust (active users)</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:#A32D2D">37.4%</div><div class="kpi-lbl">AI users who distrust output</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:#A32D2D">75.5 pts</div><div class="kpi-lbl">Paradox severity score</div></div>
+  </div>
+
+  <div class="chart-card" style="margin-bottom:12px">
+    <div class="chart-title">Trust level by AI adoption status — the core Paradox 1 chart</div>
+    <div class="chart-sub">% of row total · filtered to answered only · χ² = 5,728 · p &lt; 0.0001 · Cramér's V = 0.42 (large effect)</div>
+    <div class="legend">
+      <span class="leg-item"><span class="leg-sq" style="background:#3B6D11"></span>Highly trust</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#97C459"></span>Somewhat trust</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#888780"></span>Neutral</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#F09595"></span>Somewhat distrust</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#A32D2D"></span>Highly distrust</span>
+    </div>
+    <div style="position:relative;width:100%;height:130px">
+      <canvas id="c_crosstab" role="img" aria-label="Stacked bar chart: Uses AI group shows 3.7% highly trust but 37.4% combined distrust. Does Not Use AI shows 0.8% highly trust and 76.9% distrust.">Uses AI: 3.7% highly trust, 37.4% distrust. Does Not Use AI: 0.8% highly trust, 76.9% distrust.</canvas>
+    </div>
+    <div class="insight-strip">37.4% of active AI users (25,678 developers) distrust the output they use daily — yet continue using it. TAM falsified: adoption has completely decoupled from trust.</div>
+  </div>
+
+  <div class="two-col">
+    <div class="chart-card">
+      <div class="chart-title">High trust rate by experience band</div>
+      <div class="chart-sub">Trust FALLS as experience RISES — the expertise effect</div>
+      <div style="position:relative;width:100%;height:200px">
+        <canvas id="c_expertise" role="img" aria-label="Column chart: Early Career 10% high trust, Mid-Early 5.4%, Mid 2.8%, Experienced 2.3%. Trust falls as experience rises.">Early Career: 10% trust. Mid-Early: 5.4%. Mid: 2.8%. Experienced: 2.3%.</canvas>
+      </div>
+      <div class="insight-strip">Experienced (10+ yrs) = lowest trust 2.3% AND highest distrust 49.8%. Deeper expertise → greater ability to detect AI errors → lower trust.</div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">High trust rate by country (top 10)</div>
+      <div class="chart-sub">India highest 7.5% · Germany lowest 0.9%</div>
+      <div style="position:relative;width:100%;height:200px">
+        <canvas id="c_country" role="img" aria-label="Horizontal bar chart showing high trust percentage by country. Pakistan highest at 11%, India 7.5%, Germany lowest at 0.9%.">Country trust rates: Pakistan 11%, China 9.6%, India 7.5%, Mexico 6.5%, Turkey 5.7%, Brazil 5.1%, South Africa 4.2%, Germany 0.9%.</canvas>
+      </div>
+      <div class="insight-green">Geographic paradox: India 7.5% vs Germany 0.9% — a 6.6 pp gap reflecting cultural attitudes toward precision and AI uncertainty.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ PAGE 2: PARADOX 2 ══════ -->
+<div class="pg" id="pg2">
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-val" style="color:#3B6D11">61.0%</div><div class="kpi-lbl">Positive sentiment toward AI</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:#A32D2D">32.6%</div><div class="kpi-lbl">Positive trust in AI output</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:#854F0B">28.4 pp</div><div class="kpi-lbl">Ethics gap (sentiment − trust)</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:#A32D2D">47.5%</div><div class="kpi-lbl">Distrust rate — 4+ tool users</div></div>
+  </div>
+
+  <div class="three-col" style="margin-bottom:12px">
+    <div class="chart-card">
+      <div class="chart-title">The ethics gap</div>
+      <div class="chart-sub">Sentiment 61% vs trust 32.6% = 28.4 pp gap</div>
+      <div style="position:relative;width:100%;height:170px">
+        <canvas id="c_gap" role="img" aria-label="Horizontal bar chart: Positive Sentiment 61% (green bar) vs Positive Trust 32.6% (red bar). 28.4 percentage point gap between them.">Positive sentiment: 61%. Positive trust: 32.6%. Gap: 28.4 percentage points.</canvas>
+      </div>
+      <div class="insight-amber">Developers LIKE AI tools (61%) but don't TRUST the output (32.6%). Head and heart are disagreeing.</div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Distrust by tool count</div>
+      <div class="chart-sub">More tools → more distrust. Familiarity breeds scepticism.</div>
+      <div style="position:relative;width:100%;height:170px">
+        <canvas id="c_tool" role="img" aria-label="Column chart showing any distrust rate: 1 tool = 41.4%, 2-3 tools = 41.4%, 4+ tools = 47.5%. Distrust rises with tool count.">1 Tool: 41.4% distrust. 2-3 Tools: 41.4%. 4+ Tools: 47.5%.</canvas>
+      </div>
+      <div class="insight-strip">41.4% → 41.4% → 47.5%: 4+ tool users 6.1 pp more distrustful than single-tool users.</div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Sentiment distribution</div>
+      <div class="chart-sub">Compare with trust donut on Overview page</div>
+      <div class="legend">
+        <span class="leg-item"><span class="leg-sq" style="background:#3B6D11"></span>Very favorable 23.3%</span>
+        <span class="leg-item"><span class="leg-sq" style="background:#97C459"></span>Favorable 37.7%</span>
+        <span class="leg-item"><span class="leg-sq" style="background:#888780"></span>Indifferent 18%</span>
+        <span class="leg-item"><span class="leg-sq" style="background:#F09595"></span>Unfavorable 11.1%</span>
+        <span class="leg-item"><span class="leg-sq" style="background:#A32D2D"></span>Very unfavorable 9.9%</span>
+      </div>
+      <div style="position:relative;width:100%;height:130px">
+        <canvas id="c_sent" role="img" aria-label="Donut chart: very favorable 23.3%, favorable 37.7%, indifferent 18%, unfavorable 11.1%, very unfavorable 9.9%.">Sentiment: 23.3% very favorable, 37.7% favorable, 18% indifferent, 11.1% unfavorable, 9.9% very unfavorable.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title">AI frustrations breakdown — why distrust grows with exposure</div>
+    <div class="chart-sub">Multi-select · overlaps allowed · 31,522 who answered the frustration question</div>
+    <div style="position:relative;width:100%;height:180px">
+      <canvas id="c_frust" role="img" aria-label="Horizontal bar chart of AI frustrations. Almost right needs changes: 20,465. Debugging more time-consuming: 14,041. Less confident in skills: 6,207. Hard to understand: 5,050.">Frustrations: Almost right 20,465; Debugging 14,041; Less confident 6,207; Hard to understand 5,050.</canvas>
+    </div>
+    <div class="insight-amber">20,465 developers (42.5%) say AI output is "almost right but needs changes every time" — this repeated correction experience explains why distrust grows with tool count, not the reverse.</div>
+  </div>
+</div>
+
+<!-- ══════ PAGE 3: PARADOX 3 ══════ -->
+<div class="pg" id="pg3">
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi-val" style="color:#3B6D11">63.8%</div><div class="kpi-lbl">Not threatened</div><div class="kpi-sub" style="color:#A32D2D">↓ from 70% in 2023</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:#854F0B">21.3%</div><div class="kpi-lbl">Uncertain about job safety</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:#A32D2D">14.9%</div><div class="kpi-lbl">Feel threatened — 1 in 7</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:#A32D2D">36.2%</div><div class="kpi-lbl">Not confident job is safe</div><div class="kpi-sub" style="color:#A32D2D">Yes + Not sure combined</div></div>
+  </div>
+
+  <div class="two-col" style="margin-bottom:12px">
+    <div class="chart-card">
+      <div class="chart-title">Job threat distribution — 2025</div>
+      <div class="chart-sub">n = 35,402 who answered · 12,793 No Response retained</div>
+      <div class="legend">
+        <span class="leg-item"><span class="leg-sq" style="background:#3B6D11"></span>Not threatened 63.8%</span>
+        <span class="leg-item"><span class="leg-sq" style="background:#E67E22"></span>Uncertain 21.3%</span>
+        <span class="leg-item"><span class="leg-sq" style="background:#A32D2D"></span>Threatened 14.9%</span>
+      </div>
+      <div style="position:relative;width:100%;height:200px">
+        <canvas id="c_threat" role="img" aria-label="Donut chart: Not Threatened 63.8% (green), Uncertain 21.3% (amber), Threatened 14.9% (red).">Job threat: 63.8% not threatened, 21.3% uncertain, 14.9% threatened.</canvas>
+      </div>
+      <div class="insight-strip">36.2% are NOT confident their job is safe (Yes + Not Sure). Declining from 70% (2023) → 68% (2024) → 63.8% (2025). χ² = 439.93, p &lt; 0.0001.</div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">3-year declining trend — "Not Threatened" falling every year</div>
+      <div class="chart-sub">2023–2024: Stack Overflow published reports · 2025: this dataset</div>
+      <div class="legend">
+        <span class="leg-item"><span class="leg-sq" style="background:#3B6D11"></span>Not threatened</span>
+        <span class="leg-item"><span class="leg-sq" style="background:#A32D2D"></span>Threatened</span>
+        <span class="leg-item"><span class="leg-sq" style="background:#E67E22"></span>Not sure</span>
+      </div>
+      <div style="position:relative;width:100%;height:200px">
+        <canvas id="c_trend" role="img" aria-label="Line chart showing 3-year trend. Not Threatened fell from 70% (2023) to 63.8% (2025). Threatened rose from 12% to 14.9%.">Not Threatened: 70% (2023), 68% (2024), 63.8% (2025). Threatened: 12%, 13%, 14.9%.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-title">Threat rate by experience band — opposite of Paradox 1</div>
+    <div class="chart-sub">In P1: trust falls with experience. In P3: threat ALSO falls with experience. Early career most threatened, experienced least.</div>
+    <div style="position:relative;width:100%;height:190px">
+      <canvas id="c_threat_exp" role="img" aria-label="Column chart: Early Career 21.2% threatened, Mid-Early 17.7%, Mid 14.6%, Experienced 13.6%. Threat falls with experience.">Threatened rate: Early Career 21.2%, Mid-Early 17.7%, Mid 14.6%, Experienced 13.6%.</canvas>
+    </div>
+    <div class="insight-purple">Cross-paradox insight: Experienced devs DISTRUST AI most (P1: 49.8% distrust) but feel LEAST threatened (P3: 13.6%). Deep expertise → scepticism of output AND security in own irreplaceability.</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const C={GREEN:'#3B6D11',LGREEN:'#97C459',GRAY:'#888780',LRED:'#F09595',RED:'#A32D2D',AMBER:'#E67E22',DAMBER:'#854F0B',BLUE:'#1B3A6B',PURPLE:'#534AB7'};
+const TRUST_COLORS=[C.GREEN,C.LGREEN,C.GRAY,C.LRED,C.RED];
+
+function sw(id,el){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  el.classList.add('on');
+}
+
+const baseOpts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+c.raw.toFixed(1)+'%'}}}};
+
+new Chart(document.getElementById('c_donut'),{
+  type:'doughnut',
+  data:{labels:['Highly trust','Somewhat trust','Neutral','Somewhat distrust','Highly distrust'],
+    datasets:[{data:[3.1,29.6,21.5,26.1,19.7],backgroundColor:TRUST_COLORS,borderWidth:2,borderColor:'#fff'}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+c.raw+'%'}}}}
+});
+
+new Chart(document.getElementById('c_overview_bar'),{
+  type:'bar',
+  data:{labels:['Adoption\nRate','Any\nDistrust','Not\nThreatened','High\nTrust'],
+    datasets:[{data:[78.5,45.9,63.8,3.1],backgroundColor:[C.GREEN,C.RED,C.DAMBER,C.RED],borderRadius:4,barThickness:38}]},
+  options:{...baseOpts,indexAxis:'y',scales:{x:{display:true,min:0,max:100,ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,.06)'}},y:{ticks:{font:{size:11}}}}}
+});
+
+new Chart(document.getElementById('c_crosstab'),{
+  type:'bar',
+  data:{labels:['Uses AI','Does Not Use AI'],
+    datasets:[
+      {label:'Highly trust',data:[3.7,0.8],backgroundColor:C.GREEN,stack:'s'},
+      {label:'Somewhat trust',data:[35.5,7.8],backgroundColor:C.LGREEN,stack:'s'},
+      {label:'Neutral',data:[23.4,14.5],backgroundColor:C.GRAY,stack:'s'},
+      {label:'Somewhat distrust',data:[25.7,27.6],backgroundColor:C.LRED,stack:'s'},
+      {label:'Highly distrust',data:[11.7,49.3],backgroundColor:C.RED,stack:'s'},
+    ]},
+  options:{...baseOpts,indexAxis:'y',scales:{x:{stacked:true,max:100,ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,.06)'}},y:{stacked:true,ticks:{font:{size:11}}}},plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:c=>' '+c.dataset.label+': '+c.raw.toFixed(1)+'%'}}}}
+});
+
+new Chart(document.getElementById('c_expertise'),{
+  type:'bar',
+  data:{labels:['Early Career\n(0-2 yrs)','Mid-Early\n(3-5 yrs)','Mid\n(6-10 yrs)','Experienced\n(10+ yrs)'],
+    datasets:[{label:'High Trust %',data:[10.0,5.4,2.8,2.3],backgroundColor:[C.GREEN,C.LGREEN,C.DAMBER,C.RED],borderRadius:4,barThickness:32}]},
+  options:{...baseOpts,scales:{y:{min:0,max:12,ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,.06)'}},x:{ticks:{font:{size:10}}}},plugins:{legend:{display:false},datalabels:{display:false},tooltip:{callbacks:{label:c=>' High Trust: '+c.raw+'%'}}}}
+});
+
+new Chart(document.getElementById('c_country'),{
+  type:'bar',
+  data:{labels:['Pakistan','China','India','Mexico','Turkey','Brazil','S. Africa','Argentina'],
+    datasets:[{label:'High Trust %',data:[11.0,9.6,7.5,6.5,5.7,5.1,4.2,3.4],backgroundColor:C.BLUE,borderRadius:3,barThickness:16}]},
+  options:{...baseOpts,indexAxis:'y',scales:{x:{min:0,ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,.06)'}},y:{ticks:{font:{size:10}}}}}
+});
+
+new Chart(document.getElementById('c_gap'),{
+  type:'bar',
+  data:{labels:['Positive Sentiment','Positive Trust'],
+    datasets:[{data:[61.0,32.6],backgroundColor:[C.GREEN,C.RED],borderRadius:4,barThickness:36}]},
+  options:{...baseOpts,indexAxis:'y',scales:{x:{min:0,max:75,ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,.06)'}},y:{ticks:{font:{size:11}}}}}
+});
+
+new Chart(document.getElementById('c_tool'),{
+  type:'bar',
+  data:{labels:['1 Tool','2-3 Tools','4+ Tools'],
+    datasets:[{label:'Any Distrust %',data:[41.4,41.4,47.5],backgroundColor:[C.DAMBER,C.DAMBER,C.RED],borderRadius:4,barThickness:36}]},
+  options:{...baseOpts,scales:{y:{min:35,max:52,ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,.06)'}},x:{ticks:{font:{size:11}}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' Any Distrust: '+c.raw.toFixed(1)+'%'}}}}
+});
+
+new Chart(document.getElementById('c_sent'),{
+  type:'doughnut',
+  data:{labels:['Very favorable','Favorable','Indifferent','Unfavorable','Very unfavorable'],
+    datasets:[{data:[23.3,37.7,18.0,11.1,9.9],backgroundColor:[C.GREEN,C.LGREEN,C.GRAY,C.LRED,C.RED],borderWidth:2,borderColor:'#fff'}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'58%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+c.raw+'%'}}}}
+});
+
+new Chart(document.getElementById('c_frust'),{
+  type:'bar',
+  data:{labels:['"Almost right, needs changes"','"Debugging AI code more time-consuming"','"Less confident in own skills"','"Hard to understand why code worked"'],
+    datasets:[{label:'Count',data:[20465,14041,6207,5050],backgroundColor:[C.RED,C.DAMBER,C.PURPLE,C.BLUE],borderRadius:3,barThickness:20}]},
+  options:{...baseOpts,indexAxis:'y',scales:{x:{ticks:{callback:v=>v.toLocaleString(),font:{size:10}},grid:{color:'rgba(0,0,0,.06)'}},y:{ticks:{font:{size:10},maxTicksLimit:8}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.raw.toLocaleString()+' developers'}}}}
+});
+
+new Chart(document.getElementById('c_threat'),{
+  type:'doughnut',
+  data:{labels:['Not Threatened','Uncertain','Threatened'],
+    datasets:[{data:[63.8,21.3,14.9],backgroundColor:[C.GREEN,C.AMBER,C.RED],borderWidth:2,borderColor:'#fff'}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+c.raw+'%'}}}}
+});
+
+new Chart(document.getElementById('c_trend'),{
+  type:'line',
+  data:{labels:['2023','2024','2025'],
+    datasets:[
+      {label:'Not Threatened',data:[70,68,63.8],borderColor:C.GREEN,backgroundColor:'transparent',pointBackgroundColor:C.GREEN,pointRadius:5,tension:0.3,borderWidth:2.5},
+      {label:'Uncertain',data:[18,19,21.3],borderColor:C.AMBER,backgroundColor:'transparent',pointBackgroundColor:C.AMBER,pointRadius:5,tension:0.3,borderWidth:2,borderDash:[5,3]},
+      {label:'Threatened',data:[12,13,14.9],borderColor:C.RED,backgroundColor:'transparent',pointBackgroundColor:C.RED,pointRadius:5,tension:0.3,borderWidth:2.5}
+    ]},
+  options:{...baseOpts,scales:{y:{min:0,max:80,ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,.06)'}},x:{ticks:{font:{size:11}}}},plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:c=>' '+c.dataset.label+': '+c.raw.toFixed(1)+'%'}}}}
+});
+
+new Chart(document.getElementById('c_threat_exp'),{
+  type:'bar',
+  data:{labels:['Early Career\n(0-2 yrs)','Mid-Early\n(3-5 yrs)','Mid\n(6-10 yrs)','Experienced\n(10+ yrs)'],
+    datasets:[{label:'Threatened %',data:[21.2,17.7,14.6,13.6],backgroundColor:[C.RED,C.LRED,C.DAMBER,C.GREEN],borderRadius:4,barThickness:36}]},
+  options:{...baseOpts,scales:{y:{min:0,max:25,ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'rgba(0,0,0,.06)'}},x:{ticks:{font:{size:10}}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' Threatened: '+c.raw.toFixed(1)+'%'}}}}
+});
+</script>
